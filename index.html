@@ -1,676 +1,193 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TreePals — Diventa padrino di un albero</title>
-  <meta name="description" content="Adotta un albero, scatta foto periodiche e crea un diario verde che cresce nel tempo." />
-  <style>
-    :root{
-      --bg: #07180f;
-      --card: rgba(255,255,255,.06);
-      --card2: rgba(255,255,255,.09);
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.72);
-      --line: rgba(255,255,255,.14);
-      --green: #3CFF9D;
-      --green2:#00D17A;
-      --lime:#B8FF5A;
-      --shadow: 0 20px 60px rgba(0,0,0,.35);
-      --radius: 20px;
-      --radius2: 28px;
-      --max: 1120px;
-      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEA | Urban Tree Intelligence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:var(--font);
-      color:var(--text);
-      background:
-        radial-gradient(1200px 700px at 20% 15%, rgba(60,255,157,.18), transparent 55%),
-        radial-gradient(900px 600px at 85% 25%, rgba(184,255,90,.16), transparent 60%),
-        radial-gradient(900px 700px at 50% 105%, rgba(0,209,122,.12), transparent 55%),
-        linear-gradient(180deg, #04110a 0%, #07180f 40%, #04110a 100%);
-      overflow-x:hidden;
-    }
+        body {
+            background-color: #f4f9f4;
+            color: #1f2d1f;
+        }
 
-    a{color:inherit; text-decoration:none}
-    .wrap{max-width:var(--max); margin:0 auto; padding:0 20px}
-    .blur{
-      position:absolute; inset:-2px;
-      background:
-        radial-gradient(800px 520px at 40% 20%, rgba(60,255,157,.22), transparent 55%),
-        radial-gradient(720px 520px at 70% 45%, rgba(184,255,90,.18), transparent 55%),
-        radial-gradient(900px 520px at 50% 90%, rgba(0,209,122,.12), transparent 60%);
-      filter: blur(40px);
-      opacity:.9;
-      pointer-events:none;
-      z-index:-1;
-    }
+        header {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                        url('https://images.unsplash.com/photo-1501785888041-af3ef285b470');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
 
-    /* NAV */
-    header{
-      position:sticky; top:0;
-      backdrop-filter: blur(14px);
-      background: rgba(4,17,10,.55);
-      border-bottom:1px solid rgba(255,255,255,.08);
-      z-index:20;
-    }
-    .nav{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 0;
-    }
-    .brand{
-      display:flex; gap:12px; align-items:center;
-      font-weight:800; letter-spacing:.2px;
-    }
-    .logo{
-      width:38px; height:38px; border-radius:12px;
-      background:
-        radial-gradient(12px 12px at 30% 30%, rgba(255,255,255,.35), transparent 60%),
-        linear-gradient(135deg, rgba(60,255,157,1), rgba(0,209,122,1));
-      box-shadow: 0 10px 30px rgba(0,209,122,.18);
-      position:relative;
-      overflow:hidden;
-    }
-    .logo:after{
-      content:"";
-      position:absolute; inset:-40%;
-      background: conic-gradient(from 90deg, transparent 0 60%, rgba(255,255,255,.28) 70%, transparent 90%);
-      animation: spin 6s linear infinite;
-      opacity:.65;
-    }
+        header h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
 
-    .navlinks{display:flex; gap:18px; align-items:center}
-    .navlinks a{
-      color:var(--muted);
-      padding:10px 10px;
-      border-radius:12px;
-      transition:.2s ease;
-    }
-    .navlinks a:hover{color:var(--text); background:rgba(255,255,255,.06)}
-    .btn{
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color:var(--text);
-      padding:10px 14px;
-      border-radius:14px;
-      display:inline-flex; gap:10px; align-items:center;
-      transition:.2s ease;
-      box-shadow: 0 10px 30px rgba(0,0,0,.15);
-      cursor:pointer;
-    }
-    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.09)}
-    .btn.primary{
-      border:1px solid rgba(60,255,157,.35);
-      background: linear-gradient(135deg, rgba(60,255,157,.18), rgba(0,209,122,.12));
-      position:relative;
-    }
-    .btn.primary:before{
-      content:"";
-      position:absolute; inset:-1px; border-radius:14px;
-      background: linear-gradient(135deg, rgba(60,255,157,.55), rgba(184,255,90,.35));
-      opacity:.22; z-index:-1;
-      filter: blur(10px);
-    }
+        header p {
+            margin-top: 20px;
+            font-size: 1.3rem;
+            max-width: 700px;
+        }
 
-    /* HERO */
-    .hero{
-      position:relative;
-      padding:64px 0 26px;
-    }
-    .heroGrid{
-      display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap:26px;
-      align-items:stretch;
-    }
-    .pill{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:10px 14px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.05);
-      color:var(--muted);
-      width:fit-content;
-      box-shadow: var(--shadow);
-    }
-    .dot{
-      width:10px; height:10px; border-radius:999px;
-      background: var(--green);
-      box-shadow: 0 0 0 6px rgba(60,255,157,.12);
-      animation: pulse 1.8s ease-in-out infinite;
-    }
-    h1{
-      margin:14px 0 10px;
-      font-size: clamp(34px, 4.3vw, 56px);
-      line-height:1.02;
-      letter-spacing:-.8px;
-    }
-    .lead{
-      color:var(--muted);
-      font-size: clamp(16px, 1.45vw, 18px);
-      line-height:1.55;
-      margin: 0 0 18px;
-      max-width: 54ch;
-    }
-    .ctaRow{display:flex; gap:12px; flex-wrap:wrap; margin-top:16px}
-    .micro{
-      margin-top:14px;
-      display:flex; gap:16px; flex-wrap:wrap;
-      color:var(--muted);
-      font-size:13px;
-    }
-    .micro span{display:flex; gap:8px; align-items:center}
-    .icon{
-      width:18px; height:18px;
-      opacity:.95;
-    }
+        .btn {
+            margin-top: 30px;
+            padding: 15px 35px;
+            background-color: #2e7d32;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: 0.3s ease;
+        }
 
-    .panel{
-      border:1px solid rgba(255,255,255,.14);
-      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
-      border-radius: var(--radius2);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-    }
-    .panelInner{padding:18px}
-    .panelTitle{
-      display:flex; justify-content:space-between; align-items:center;
-      margin-bottom:12px;
-    }
-    .panelTitle b{letter-spacing:.2px}
-    .badge{
-      font-size:12px;
-      color: rgba(255,255,255,.85);
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      padding:6px 10px;
-      border-radius:999px;
-    }
-    .mock{
-      border-top:1px solid rgba(255,255,255,.12);
-      padding:16px 18px 18px;
-      display:grid;
-      gap:12px;
-    }
-    .row{
-      display:flex; gap:12px; align-items:center;
-      padding:12px;
-      border-radius: 16px;
-      background: rgba(0,0,0,.18);
-      border:1px solid rgba(255,255,255,.10);
-    }
-    .thumb{
-      width:44px; height:44px; border-radius:14px;
-      background:
-        radial-gradient(18px 18px at 30% 30%, rgba(255,255,255,.35), transparent 60%),
-        linear-gradient(135deg, rgba(184,255,90,.25), rgba(60,255,157,.22));
-      border:1px solid rgba(255,255,255,.14);
-      position:relative;
-      overflow:hidden;
-      flex:0 0 auto;
-    }
-    .thumb:after{
-      content:"";
-      position:absolute; left:-40%; top:-40%;
-      width:180%; height:180%;
-      background: radial-gradient(circle at 35% 35%, rgba(255,255,255,.35), transparent 55%);
-      opacity:.55;
-      transform: rotate(10deg);
-    }
-    .row .meta{display:flex; flex-direction:column; gap:3px}
-    .row .meta small{color:var(--muted)}
-    .progress{
-      height:10px; background: rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:999px; overflow:hidden;
-      margin-top:8px;
-    }
-    .bar{
-      height:100%;
-      width: 62%;
-      background: linear-gradient(90deg, rgba(60,255,157,1), rgba(184,255,90,1));
-      border-radius:999px;
-      box-shadow: 0 0 24px rgba(60,255,157,.25);
-      animation: grow 2.2s ease-in-out infinite alternate;
-    }
+        .btn:hover {
+            background-color: #1b5e20;
+        }
 
-    /* SECTIONS */
-    section{padding:46px 0}
-    .sectionHead{
-      display:flex; align-items:flex-end; justify-content:space-between;
-      gap:16px; flex-wrap:wrap;
-      margin-bottom:18px;
-    }
-    h2{
-      margin:0;
-      font-size: clamp(22px, 2.4vw, 30px);
-      letter-spacing:-.3px;
-    }
-    .sub{color:var(--muted); max-width:70ch; line-height:1.55; margin:8px 0 0}
+        section {
+            padding: 80px 10%;
+        }
 
-    .grid3{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:16px;
-    }
-    .card{
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.05);
-      border-radius: var(--radius);
-      padding:16px;
-      box-shadow: 0 14px 40px rgba(0,0,0,.22);
-      position:relative;
-      overflow:hidden;
-      min-height: 160px;
-    }
-    .card:before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(420px 180px at 20% 0%, rgba(60,255,157,.20), transparent 55%);
-      opacity:.85; pointer-events:none;
-    }
-    .card b{display:block; font-size:16px; margin:10px 0 6px}
-    .card p{margin:0; color:var(--muted); line-height:1.55}
-    .kpi{
-      display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;
-    }
-    .kpi span{
-      font-size:12px;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.16);
-      color: rgba(255,255,255,.85);
-    }
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2e7d32;
+        }
 
-    .how{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:16px;
-    }
-    .steps{
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.05);
-      border-radius: var(--radius2);
-      overflow:hidden;
-      box-shadow: var(--shadow);
-    }
-    .step{
-      padding:16px;
-      display:flex; gap:14px;
-      border-bottom:1px solid rgba(255,255,255,.10);
-    }
-    .step:last-child{border-bottom:none}
-    .num{
-      width:36px; height:36px;
-      border-radius:14px;
-      background: linear-gradient(135deg, rgba(60,255,157,.25), rgba(184,255,90,.18));
-      border:1px solid rgba(255,255,255,.14);
-      display:grid; place-items:center;
-      font-weight:800;
-      flex:0 0 auto;
-    }
-    .step .txt b{display:block}
-    .step .txt small{color:var(--muted); line-height:1.5}
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
 
-    .uploadBox{
-      border:1px dashed rgba(255,255,255,.22);
-      background: rgba(0,0,0,.18);
-      border-radius: var(--radius2);
-      padding:18px;
-      min-height: 100%;
-      display:flex; flex-direction:column; gap:12px;
-      justify-content:space-between;
-    }
-    .drop{
-      border-radius: 18px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      padding:16px;
-      display:grid; gap:10px;
-    }
-    .drop strong{font-size:15px}
-    .drop small{color:var(--muted); line-height:1.5}
-    input[type="file"]{display:none}
-    .fileBtn{
-      display:inline-flex; gap:10px; align-items:center;
-      width:fit-content;
-      padding:10px 14px;
-      border-radius:14px;
-      border:1px solid rgba(60,255,157,.30);
-      background: rgba(60,255,157,.10);
-      cursor:pointer;
-      transition:.2s ease;
-    }
-    .fileBtn:hover{transform:translateY(-1px); background: rgba(60,255,157,.14)}
-    .preview{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:10px;
-    }
-    .ph{
-      aspect-ratio: 4 / 3;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.12);
-      background:
-        radial-gradient(22px 22px at 30% 30%, rgba(255,255,255,.28), transparent 60%),
-        linear-gradient(135deg, rgba(255,255,255,.06), rgba(0,0,0,.18));
-      overflow:hidden;
-      position:relative;
-    }
-    .ph img{width:100%; height:100%; object-fit:cover; display:block}
-    .ph .tag{
-      position:absolute; left:10px; top:10px;
-      font-size:11px;
-      padding:6px 9px;
-      border-radius:999px;
-      background: rgba(0,0,0,.45);
-      border:1px solid rgba(255,255,255,.14);
-      color: rgba(255,255,255,.9);
-      backdrop-filter: blur(10px);
-    }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            transition: 0.3s ease;
+        }
 
-    /* FOOTER */
-    footer{
-      border-top:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
-      padding:26px 0 40px;
-      margin-top:22px;
-    }
-    .foot{
-      display:flex; gap:16px; flex-wrap:wrap; align-items:center; justify-content:space-between;
-      color:var(--muted);
-      font-size:13px;
-    }
-    .foot a{color:rgba(255,255,255,.82)}
-    .foot a:hover{text-decoration:underline}
+        .card:hover {
+            transform: translateY(-5px);
+        }
 
-    /* RESPONSIVE */
-    @media (max-width: 920px){
-      .heroGrid{grid-template-columns:1fr; }
-      .grid3{grid-template-columns:1fr;}
-      .how{grid-template-columns:1fr;}
-      .preview{grid-template-columns: repeat(2, 1fr);}
-      .navlinks{display:none;}
-    }
+        .card h3 {
+            margin-bottom: 15px;
+            color: #2e7d32;
+        }
 
-    /* Animations */
-    @keyframes spin{to{transform:rotate(360deg)}}
-    @keyframes pulse{
-      0%,100%{transform:scale(1); box-shadow: 0 0 0 6px rgba(60,255,157,.12)}
-      50%{transform:scale(1.08); box-shadow: 0 0 0 10px rgba(60,255,157,.08)}
-    }
-    @keyframes grow{from{width:52%} to{width:76%}}
-  </style>
+        .problem {
+            background-color: #e8f5e9;
+        }
+
+        footer {
+            background-color: #1b5e20;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        footer p {
+            opacity: 0.8;
+        }
+
+        @media(max-width: 768px){
+            header h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
-  <div class="blur" aria-hidden="true"></div>
 
-  <header>
-    <div class="wrap">
-      <div class="nav">
-        <a class="brand" href="#top" aria-label="Home">
-          <span class="logo" aria-hidden="true"></span>
-          <span>TreePals</span>
-        </a>
+<header>
+    <h1>GEA</h1>
+    <p>
+        Piattaforma intelligente e community-driven per la raccolta,
+        georeferenziazione e analisi predittiva dei dati arborei urbani.
+    </p>
+    <a href="#about" class="btn">Scopri di più</a>
+</header>
 
-        <nav class="navlinks" aria-label="Menu">
-          <a href="#come-funziona">Come funziona</a>
-          <a href="#diario">Diario</a>
-          <a href="#impatto">Impatto</a>
-          <a href="#contatti">Contatti</a>
-        </nav>
-
-        <div style="display:flex; gap:10px; align-items:center;">
-          <button class="btn" id="btnLogin" type="button" aria-label="Accedi">Accedi</button>
-          <a class="btn primary" href="#come-funziona" aria-label="Diventa padrino">
-            <span aria-hidden="true">🌿</span>
-            <span>Diventa padrino</span>
-          </a>
+<section id="problem" class="problem">
+    <h2 class="section-title">Il Problema</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>Dati frammentati</h3>
+            <p>I dati arborei oggi disponibili sono isolati, non interoperabili e soggetti a rapida obsolescenza.</p>
         </div>
-      </div>
+        <div class="card">
+            <h3>Monitoraggio inefficiente</h3>
+            <p>Processi lenti, costosi e dipendenti da rilevazioni manuali non standardizzate.</p>
+        </div>
+        <div class="card">
+            <h3>Mancanza di visione predittiva</h3>
+            <p>Assenza di infrastrutture dati dinamiche per prevenire rischi e pianificare interventi.</p>
+        </div>
     </div>
-  </header>
+</section>
 
-  <main id="top">
-    <div class="wrap">
-      <section class="hero">
-        <div class="heroGrid">
-          <div>
-            <div class="pill">
-              <span class="dot" aria-hidden="true"></span>
-              <span>Un gesto semplice: un albero, una storia, foto nel tempo.</span>
-            </div>
-
-            <h1>Adotta un albero.<br>Scatta foto.<br>Fai crescere il tuo diario verde.</h1>
-
-            <p class="lead">
-              Ogni utente diventa <b>padrino</b> di un albero e lo racconta con scatti periodici.
-              Costruiamo insieme un archivio visivo della natura: <b>crescita, stagioni, salute</b>.
-            </p>
-
-            <div class="ctaRow">
-              <a class="btn primary" href="#come-funziona">
-                <span aria-hidden="true">📸</span>
-                <span>Inizia con la prima foto</span>
-              </a>
-              <a class="btn" href="#diario">
-                <span aria-hidden="true">🗓️</span>
-                <span>Vedi un esempio di diario</span>
-              </a>
-            </div>
-
-            <div class="micro" aria-label="Punti chiave">
-              <span>
-                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Foto guidate (stesso punto, stesso albero)
-              </span>
-              <span>
-                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M12 2a10 10 0 1 0 10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Reminder periodici (es. ogni 2 settimane)
-              </span>
-              <span>
-                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M12 21s-7-4.4-7-11a7 7 0 0 1 14 0c0 6.6-7 11-7 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Mappa (privacy controllata)
-              </span>
-            </div>
-          </div>
-
-          <aside class="panel" aria-label="Anteprima dashboard">
-            <div class="panelInner">
-              <div class="panelTitle">
-                <b>Il tuo albero: “Quercia 17”</b>
-                <span class="badge">Diario attivo</span>
-              </div>
-              <div>
-                <div style="color:var(--muted); font-size:13px;">
-                  Prossimo scatto consigliato: <b style="color:rgba(255,255,255,.92)">tra 6 giorni</b>
-                </div>
-                <div class="progress" aria-label="Progressi diario">
-                  <div class="bar" role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="mock">
-              <div class="row">
-                <div class="thumb" aria-hidden="true"></div>
-                <div class="meta">
-                  <b>Scatto #08</b>
-                  <small>Inverno • foglie assenti • note: tronco ok</small>
-                </div>
-              </div>
-              <div class="row">
-                <div class="thumb" aria-hidden="true"></div>
-                <div class="meta">
-                  <b>Scatto #07</b>
-                  <small>Autunno • colore intenso • terreno umido</small>
-                </div>
-              </div>
-              <div class="row">
-                <div class="thumb" aria-hidden="true"></div>
-                <div class="meta">
-                  <b>Scatto #06</b>
-                  <small>Estate • chioma piena • luce forte</small>
-                </div>
-              </div>
-            </div>
-          </aside>
+<section id="solution">
+    <h2 class="section-title">La Soluzione</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>Community Data Collection</h3>
+            <p>Gli utenti raccolgono immagini georeferenziate tramite smartphone, alimentando una banca dati centralizzata.</p>
         </div>
-      </section>
-
-      <section id="come-funziona">
-        <div class="sectionHead">
-          <div>
-            <h2>Come funziona</h2>
-            <p class="sub">
-              Ti guidiamo in 3 minuti: scegli un albero (o te ne assegniamo uno), scatti da un punto fisso,
-              carichi la foto e aggiungi una nota. Il tempo farà il resto.
-            </p>
-          </div>
-          <a class="btn" href="#diario"><span aria-hidden="true">✨</span><span>Scopri il diario</span></a>
+        <div class="card">
+            <h3>Machine Learning Pipeline</h3>
+            <p>Analisi automatica delle immagini per generare insight dinamici e aggiornati.</p>
         </div>
-
-        <div class="grid3" aria-label="Vantaggi principali">
-          <div class="card">
-            <span class="badge">1</span>
-            <b>Diventi padrino</b>
-            <p>Scegli un albero vicino a te o adotta uno segnalato dalla community. Ogni albero ha una scheda dedicata.</p>
-            <div class="kpi">
-              <span>Profilo albero</span><span>Coordinate</span><span>Specie (opz.)</span>
-            </div>
-          </div>
-
-          <div class="card">
-            <span class="badge">2</span>
-            <b>Scatti foto periodiche</b>
-            <p>Stesso angolo, stessa distanza: così le foto diventano confrontabili e raccontano davvero crescita e stagioni.</p>
-            <div class="kpi">
-              <span>Guida in-app</span><span>Grid overlay</span><span>Reminder</span>
-            </div>
-          </div>
-
-          <div class="card">
-            <span class="badge">3</span>
-            <b>Crei un diario verde</b>
-            <p>Ogni foto si aggiunge alla timeline. Note, condizioni meteo, piccoli dettagli: una storia che rimane.</p>
-            <div class="kpi">
-              <span>Timeline</span><span>Note</span><span>Condivisione</span>
-            </div>
-          </div>
+        <div class="card">
+            <h3>Visione 360°</h3>
+            <p>Dashboard predittive per pubbliche amministrazioni, assicurazioni e gestori di infrastrutture.</p>
         </div>
-      </section>
+    </div>
+</section>
 
-      <section id="diario">
-        <div class="sectionHead">
-          <div>
-            <h2>Prova la sezione “Scatta & Carica”</h2>
-            <p class="sub">
-              Questa è una demo della home: seleziona alcune foto e vedrai un’anteprima qui sotto
-              (su un sito vero, verrebbero inviate al backend).
-            </p>
-          </div>
-          <button class="btn" type="button" id="btnTour"><span aria-hidden="true">🧭</span><span>Tour rapido</span></button>
+<section id="impact">
+    <h2 class="section-title">Impatto</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>Riduzione dei costi</h3>
+            <p>Abbattimento dei costi di rilevazione grazie al modello community-driven.</p>
         </div>
-
-        <div class="how">
-          <div class="steps" aria-label="Passaggi">
-            <div class="step">
-              <div class="num">1</div>
-              <div class="txt">
-                <b>Scegli il tuo albero</b>
-                <small>Un nome, una posizione (anche approssimata) e una foto iniziale: nasce la scheda.</small>
-              </div>
-            </div>
-            <div class="step">
-              <div class="num">2</div>
-              <div class="txt">
-                <b>Scatta con coerenza</b>
-                <small>Consigli: stessa ora se possibile, stessa inquadratura, includi tronco e chioma.</small>
-              </div>
-            </div>
-            <div class="step">
-              <div class="num">3</div>
-              <div class="txt">
-                <b>Carica e annota</b>
-                <small>Aggiungi note su meteo, terreno, foglie, eventuali stress: piccoli segnali contano.</small>
-              </div>
-            </div>
-            <div class="step">
-              <div class="num">4</div>
-              <div class="txt">
-                <b>Confronta nel tempo</b>
-                <small>La timeline mostra cambiamenti e stagioni. Puoi condividere il diario o tenerlo privato.</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="uploadBox" aria-label="Upload demo">
-            <div class="drop" id="dropZone">
-              <strong>Carica 1–3 foto (demo)</strong>
-              <small>
-                Trascina qui i file oppure usa il pulsante. Le immagini restano sul tuo dispositivo:
-                questa pagina non invia dati.
-              </small>
-              <label class="fileBtn" for="fileInput">
-                <span aria-hidden="true">⬆️</span><span>Seleziona foto</span>
-              </label>
-              <input id="fileInput" type="file" accept="image/*" multiple />
-            </div>
-
-            <div>
-              <div style="display:flex; justify-content:space-between; gap:12px; align-items:center; margin:10px 0 10px;">
-                <b>Anteprima</b>
-                <button class="btn" type="button" id="btnClear"><span aria-hidden="true">🧹</span><span>Svuota</span></button>
-              </div>
-
-              <div class="preview" id="previewGrid" aria-label="Anteprime immagini">
-                <div class="ph"><span class="tag">#1</span></div>
-                <div class="ph"><span class="tag">#2</span></div>
-                <div class="ph"><span class="tag">#3</span></div>
-              </div>
-
-              <div style="margin-top:12px; color:var(--muted); font-size:13px; line-height:1.5;">
-                Tip: quando farai l’app vera, qui puoi aggiungere:
-                <b style="color:rgba(255,255,255,.9)">GPS</b>, <b style="color:rgba(255,255,255,.9)">meteo</b>,
-                <b style="color:rgba(255,255,255,.9)">specie</b>, e un <b style="color:rgba(255,255,255,.9)">punteggio salute</b>.
-              </div>
-            </div>
-          </div>
+        <div class="card">
+            <h3>Dati aggiornati in tempo reale</h3>
+            <p>Superamento della “vita utile” del dato tramite aggiornamento continuo.</p>
         </div>
-      </section>
-
-      <section id="impatto">
-        <div class="sectionHead">
-          <div>
-            <h2>Impatto (e perché è bello)</h2>
-            <p class="sub">
-              Un albero osservato è un albero protetto: la community crea attenzione e dati visivi utili
-              (anche per progetti educativi e cittadini).
-            </p>
-          </div>
+        <div class="card">
+            <h3>Decisioni informate</h3>
+            <p>Strumenti predittivi per prevenire crolli e ottimizzare la gestione del verde urbano.</p>
         </div>
+    </div>
+</section>
 
-        <div class="grid3">
-          <div class="card">
-            <span aria-hidden="true">🌱</span>
-            <b>Educazione e consapevolezza</b>
-            <p>Impari a leggere stagioni, stress idrico, danni e ripresa. È citizen science, ma semplice.</p>
-          </div>
-          <div class="card">
-            <span aria-hidden="true">🧩</span>
-            <b>Diari confrontabili</b>
+<footer>
+    <h2>GEA – Urban Tree Intelligence</h2>
+    <p>Agritech | Data Infrastructure | Sustainable Cities</p>
+    <p>© 2026 GEA</p>
+</footer>
+
+</body>
+</html>
